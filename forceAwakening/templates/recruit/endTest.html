@@ -1,0 +1,33 @@
+{% extends 'recruit/base.html' %}
+
+{% block content%}
+<h1>
+    Poll results for {{ name }}(id:{{ id }}):
+</h1>
+<p>
+    <b>answers:</b><br>
+    <table class="table table-striped table-sm">
+    {% for q, a in results %}
+    <tr>
+        <td>
+            {{q}}
+        </td>
+        <td>
+            {{a}}
+        </td> 
+    </tr>
+    {% endfor %}
+    </table>
+</p>
+{% if title == "Answers" %}
+<form action="/recruit/sith/shadowHand/" method="POST">
+    {% csrf_token %}
+    <input type='hidden' name='recruit_id' value={{ id }}>
+    <input type='hidden' name='sith_id' value={{ sith_id }}>
+    <input type="submit" value="Set {{ name }} as Shadow Hand">
+</form>
+<a href='/'>Click here to return main page</a>
+{% else%}
+<a href='/'>Click here to return main page</a>
+{% endif %}
+{% endblock %}

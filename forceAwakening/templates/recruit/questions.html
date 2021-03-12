@@ -1,0 +1,18 @@
+{% extends 'recruit/base.html' %}
+{% block content %}
+    <form action="/recruit/questions/" method="POST">
+        {% csrf_token %}
+        <p>
+            Question {{qid}}:
+        </p>        
+        <p>
+            {{question}} <input type="checkbox" name='answer' value='Yes'>
+        </p>
+        <p>
+            <input type="hidden" name='qid' value={{qid}}>
+        </p>        
+        <p>
+            <input type="submit" value="Send answer">
+        </p>              
+    </form>
+{% endblock %}

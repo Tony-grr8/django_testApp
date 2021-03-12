@@ -1,0 +1,16 @@
+{% extends 'recruit/base.html' %}
+
+{% block content%}
+<p> Your name
+    <form action='/recruit/sith/showRecruits/' method="POST">
+        {% csrf_token %}
+        <select size="10" multiple name="sith_id">
+            <option disabled>Choose your name</option>
+            {% for sith in siths %}
+            <option value={{sith.id}}>{{sith.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value='Send'>
+    </form>
+</p>
+{% endblock %}

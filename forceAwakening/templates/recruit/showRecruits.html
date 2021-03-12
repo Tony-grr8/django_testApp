@@ -1,0 +1,29 @@
+{% extends 'recruit/base.html' %}
+
+{% block content%}
+{% if rec_list%}
+your id : {{ sith_id }}<br>
+<form action='/recruit/sith/showAnswers/' method="POST">
+    {% csrf_token %}    
+    <select size="10" multiple name="recruit_id">
+        <option disabled>Recruits list from your planet</option>
+        {% for rec in rec_list %}
+        <option value={{rec.id}}>{{rec.name}}</option>
+        {% endfor %}
+    </select>
+    <input name='sith_id' type="hidden" value={{ sith_id }}>
+    <input type="submit" value='Show choosen recruit answers'>
+</form>
+{% else %}
+<p>
+    <b>No data</b><br>
+    <a href='/'>Click here to return main page</a>
+</p>
+{% endif %}
+<select size="10" multiple name="shadowHands">
+    <option disabled>Your ShadowHands from your planet</option>
+    {% for sh in shadowHands %}
+    <option value={{sh.id}}>{{sh.name}}</option>
+    {% endfor %}
+</select>
+{% endblock %}
