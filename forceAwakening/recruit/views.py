@@ -57,8 +57,12 @@ def welcome(request: HttpRequest):
     return render(request, 'recruit/welcome.html', {'title': f'Welcome, {_rec_obj.name}', 'name': _rec_obj.name})
 
 def sith(request: HttpRequest):
-    _sith_list = [sith for sith in Sith.objects.all()]    
-    return render(request, 'recruit/sith.html', {'title': f'Introduce yourself', 'siths': _sith_list})
+    _siths_list = [sith for sith in Sith.objects.all()]  
+    _dict_sith_sh_count = {} 
+    for sith in _siths_list:
+        _dict_sith_sh_count[sith.name] = Recruit.objects.filter(main_sith=sith.id).count()
+    print(_dict_sith_sh_count)        
+    return render(request, 'recruit/sith.html', {'title': f'Introduce yourself', 'siths': _siths_list, 'dict_siths_sh_counter':_dict_sith_sh_count})
 
 def showRecruits(request: HttpRequest):
     if request.method == 'POST':        

@@ -1,16 +1,38 @@
 {% extends 'recruit/base.html' %}
 
 {% block content%}
-<p> Your name
-    <form action='/recruit/sith/showRecruits/' method="POST">
-        {% csrf_token %}
-        <select size="10" multiple name="sith_id">
-            <option disabled>Choose your name</option>
-            {% for sith in siths %}
-            <option value={{sith.id}}>{{sith.name}}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" value='Send'>
-    </form>
-</p>
+    <p> Your name
+        <form action='/recruit/sith/showRecruits/' method="POST">
+            {% csrf_token %}
+            <select size="10" multiple name="sith_id">
+                <option disabled>Choose your name</option>
+                {% for sith in siths %}
+                <option value={{sith.id}}>{{sith.name}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value='Send'>
+        </form>
+    </p>
+    <p>
+        <h1 align='center'>
+            Number of siths ShadowHands
+        </h1>
+    </p>
+    <table class="table table-striped table-sm" >        
+        <tr>
+            <th>Sith name</th>
+            <th>Number of ShadowHands</th>          
+        </tr>        
+        {% for key, value in dict_siths_sh_counter.items %}        
+        <tr>
+            <td>
+                {{key}}
+            </td>
+            <td>
+                {{value}}
+            </td>            
+        </tr>
+        {% endfor %}        
+    </table>
+        
 {% endblock %}
