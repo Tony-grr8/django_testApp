@@ -2,12 +2,18 @@ from django.db import models
 
 # Create your models here.
 class Planets(models.Model):
+    '''
+    Модель описывающая Планету
+    '''
     name=models.CharField(max_length=42)
 
     def __str__(self):
         return self.name      
 
 class Sith(models.Model):
+    '''
+    Модель описывающая Ситха
+    '''
     name = models.CharField(max_length=42)
     planet = models.ForeignKey(Planets, on_delete = models.CASCADE)
 
@@ -15,6 +21,9 @@ class Sith(models.Model):
         return self.name 
 
 class Recruit(models.Model):
+    '''
+    Модель описывающая Рекрута
+    '''
     name = models.CharField(max_length=42)
     planet = models.ForeignKey(Planets, on_delete = models.CASCADE)
     age = models.SmallIntegerField()
@@ -27,6 +36,9 @@ class Recruit(models.Model):
 
 
 class Questions(models.Model):
+    '''
+    Модель описывающая Вопрос
+    '''
     question = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
@@ -34,6 +46,9 @@ class Questions(models.Model):
 
 
 class RecruitAnswers(models.Model):
+    '''
+    Модель описывающая ответы рекрутов на вопросы
+    '''
     recruitId = models.BigIntegerField()
     questionId = models.BigIntegerField()
     answer = models.BooleanField()
