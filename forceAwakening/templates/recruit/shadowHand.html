@@ -1,8 +1,13 @@
 {% extends 'recruit/base.html' %}
 
 {% block content%}
+{% if id%}
 <h1>
     A user named {{ name }}(id: {{ id }}) was assigned to the ShadowHand!<br>
     <a href='/'>Click here to return main page</a>
 </h1>
+{% else %}
+<h1>You already have 3 shadowHands, each Sith can have no more than 3. </h1><br>
+<a href='/'>Click here to return main page</a>
+{% endif %}
 {% endblock %}
