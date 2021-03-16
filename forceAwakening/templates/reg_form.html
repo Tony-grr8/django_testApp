@@ -9,23 +9,23 @@
 </head>
 <body>
     <form action='/recruit/' method="POST">
-        {% csrf_token %}
+        {% csrf_token %}        
         <p>
-            Your name<input type='text' name='name'>
+            Your name<input type='text' name='name' required>
         </p>        
         <p> Your planet
-            <select size="3" multiple name="planet">
+            <select size="3" name="planet_id" required>
                 <option disabled>Choose your planet</option>
                 {% for planet in planets %}
-                <option value={{planet.name}}>{{planet.name}}</option>
+                <option value={{planet.id}}>{{planet.name}}</option>
                 {% endfor %}
            </select>
         </p>
         <p>
-            Your age<input type='text' name='age'>
+            Your age<input type='text' name='age' required>
         </p>
         <p>
-            Your email<input type='email' name='email'>
+            Your email<input type='email' name='email' required>
         </p>        
         <p><input type="submit" value="Send"></p>        
     </form>   

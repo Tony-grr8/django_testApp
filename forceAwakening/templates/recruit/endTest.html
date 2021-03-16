@@ -20,7 +20,7 @@
         </table>
     </p>
     {% if title == "Answers" %}
-        {% if rec_count < 3 %}
+        {% if sh_number < 3 %}
             <form action="/recruit/sith/shadowHand/" method="POST">
                 {% csrf_token %}
                 <input type='hidden' name='recruit_id' value={{ id }}>

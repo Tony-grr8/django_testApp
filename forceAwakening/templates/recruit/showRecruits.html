@@ -5,7 +5,7 @@
 your id : {{ sith_id }}<br>
 <form action='/recruit/sith/showAnswers/' method="POST">
     {% csrf_token %}    
-    <select size="10" multiple name="recruit_id">
+    <select size="10" name="recruit_id" required>
         <option disabled>Recruits list from your planet</option>
         {% for rec in rec_list %}
         <option value={{rec.id}}>{{rec.name}}</option>

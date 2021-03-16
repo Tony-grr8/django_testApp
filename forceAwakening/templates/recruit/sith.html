@@ -4,7 +4,7 @@
     <p> Your name
         <form action='/recruit/sith/showRecruits/' method="POST">
             {% csrf_token %}
-            <select size="10" multiple name="sith_id">
+            <select size="10" name="sith_id" required>
                 <option disabled>Choose your name</option>
                 {% for sith in siths %}
                 <option value={{sith.id}}>{{sith.name}}</option>
@@ -23,16 +23,36 @@
             <th>Sith name</th>
             <th>Number of ShadowHands</th>          
         </tr>        
-        {% for key, value in dict_siths_sh_counter.items %}        
+        {% for sith in siths %}        
         <tr>
             <td>
-                {{key}}
+                {{ sith.name }}
             </td>
             <td>
-                {{value}}
+                {{ sith.shadowHandsNumber }}
             </td>            
         </tr>
         {% endfor %}        
     </table>
-        
+    <p>
+        <h1 align='center'>
+            Number of siths ShadowHands(>1)
+        </h1>
+    </p>    
+    <table class="table table-striped table-sm" >        
+        <tr>
+            <th>Sith name</th>
+            <th>Number of ShadowHands</th>          
+        </tr>        
+        {% for sith in siths1 %}        
+        <tr>
+            <td>
+                {{ sith.name }}
+            </td>
+            <td>
+                {{ sith.shadowHandsNumber }}
+            </td>            
+        </tr>
+        {% endfor %}        
+    </table>       
 {% endblock %}

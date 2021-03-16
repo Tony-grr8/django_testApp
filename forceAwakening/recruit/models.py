@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Planets(models.Model):
+class Planet(models.Model):
     '''
     Модель описывающая Планету
     '''
@@ -15,7 +15,8 @@ class Sith(models.Model):
     Модель описывающая Ситха
     '''
     name = models.CharField(max_length=42)
-    planet = models.ForeignKey(Planets, on_delete = models.CASCADE)
+    planet = models.ForeignKey(Planet, on_delete = models.CASCADE)    
+    shadowHandsNumber = models.SmallIntegerField(default=0)
 
     def __str__(self):
         return self.name 
@@ -25,17 +26,16 @@ class Recruit(models.Model):
     Модель описывающая Рекрута
     '''
     name = models.CharField(max_length=42)
-    planet = models.ForeignKey(Planets, on_delete = models.CASCADE)
+    planet = models.ForeignKey(Planet, on_delete = models.CASCADE)
     age = models.SmallIntegerField()
     email = models.CharField(max_length=42, unique=True)
-    shadowHand = models.BooleanField(default=False)
-    main_sith = models.ManyToManyField(Sith, default=None)
+    mainSith = models.ForeignKey(Sith, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.name    
 
 
-class Questions(models.Model):
+class Question(models.Model):
     '''
     Модель описывающая Вопрос
     '''
@@ -45,7 +45,7 @@ class Questions(models.Model):
         return self.question    
 
 
-class RecruitAnswers(models.Model):
+class RecruitAnswer(models.Model):
     '''
     Модель описывающая ответы рекрутов на вопросы
     '''
@@ -54,13 +54,8 @@ class RecruitAnswers(models.Model):
     answer = models.BooleanField()
 
     def __str__(self):
-        return 'RecruitAnswers: ' + 'Recruit name and ID: ' + Recruit.objects.get(id=self.recruitId).name + ' ' + str(self.recruitId) +';' + ' Q: ' + Questions.objects.get(id=self.questionId).question + ' A: ' + str(self.answer)      
+        return 'RecruitAnswer: ' + 'Recruit name and ID: ' + Recruit.objects.get(id=self.recruitId).name + ' ' + str(self.recruitId) +';' + ' Q: ' + Questions.objects.get(id=self.questionId).question + ' A: ' + str(self.answer)      
 
 
-# class Sith(models.Model):
-#     name = models.CharField(max_length=42)
-#     planet = models.ForeignKey(Planets, on_delete = models.CASCADE)
-
-#     def __str__(self):
-#         return self.name       
+  
  
