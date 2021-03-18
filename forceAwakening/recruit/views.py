@@ -45,9 +45,7 @@ def questions(request: HttpRequest):
         _first_question = Question.objects.get(id=1)        
         return render(request, 'recruit/questions.html', context={'title': 'Questions', 'qid':1, 'question': _first_question.question})
 
-def sith(request: HttpRequest):
-    # tmp_list = [r for r in Sith.objects.all() if r.recruit_set.all().count() >= 1]
-    # print(tmp_list)        
+def sith(request: HttpRequest):     
     return render(request, 'recruit/sith.html', {'title': 'Introduce yourself', 'siths': Sith.objects.all(), })
 
 def showRecruits(request: HttpRequest):
