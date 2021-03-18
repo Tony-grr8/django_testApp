@@ -29,7 +29,7 @@
                 {{ sith.name }}
             </td>
             <td>
-                {{ sith.shadowHandsNumber }}
+                {{ sith.recruit_set.all.count }}
             </td>            
         </tr>
         {% endfor %}        
@@ -44,15 +44,17 @@
             <th>Sith name</th>
             <th>Number of ShadowHands</th>          
         </tr>        
-        {% for sith in siths1 %}        
-        <tr>
-            <td>
-                {{ sith.name }}
-            </td>
-            <td>
-                {{ sith.shadowHandsNumber }}
-            </td>            
-        </tr>
+        {% for sith in siths %}
+            {% if sith.recruit_set.all.count > 1 %}        
+                <tr>
+                    <td>
+                        {{ sith.name }}
+                    </td>
+                    <td>
+                        {{ sith.recruit_set.all.count }}
+                    </td>            
+                </tr>
+            {% endif %}
         {% endfor %}        
     </table>       
 {% endblock %}

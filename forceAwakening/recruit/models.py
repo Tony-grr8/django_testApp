@@ -16,7 +16,6 @@ class Sith(models.Model):
     '''
     name = models.CharField(max_length=42)
     planet = models.ForeignKey(Planet, on_delete = models.CASCADE)    
-    shadowHandsNumber = models.SmallIntegerField(default=0)
 
     def __str__(self):
         return self.name 

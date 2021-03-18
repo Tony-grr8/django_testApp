@@ -45,15 +45,17 @@ def questions(request: HttpRequest):
         _first_question = Question.objects.get(id=1)        
         return render(request, 'recruit/questions.html', context={'title': 'Questions', 'qid':1, 'question': _first_question.question})
 
-def sith(request: HttpRequest):    
-    return render(request, 'recruit/sith.html', {'title': f'Introduce yourself', 'siths': Sith.objects.all(), 'siths1': Sith.objects.filter(shadowHandsNumber__gte=1)})
+def sith(request: HttpRequest):
+    # tmp_list = [r for r in Sith.objects.all() if r.recruit_set.all().count() >= 1]
+    # print(tmp_list)        
+    return render(request, 'recruit/sith.html', {'title': 'Introduce yourself', 'siths': Sith.objects.all(), })
 
 def showRecruits(request: HttpRequest):
     if request.method == 'POST':
         _siths_list = Sith.objects.all()       
         _sith_planet_id = _siths_list.get(id=request.POST.get('sith_id')).planet.id             
-        _rec_list = [rec for rec in Recruit.objects.filter(planet_id=_sith_planet_id).exclude(mainSith_id=request.POST.get('sith_id'))]
-        _sith_sh_list = [sh for sh in Recruit.objects.filter(mainSith_id=request.POST.get('sith_id'))]
+        _rec_list = [rec for rec in Recruit.objects.filter(planet_id=_sith_planet_id).exclude(mainSith_id=request.POST.get('sith_id'))]        
+        _sith_sh_list = _siths_list.get(id=request.POST.get('sith_id')).recruit_set.all()        
         context = {
             'title': 'Recruits list',
             'rec_list': _rec_list,
@@ -68,8 +70,8 @@ def showAnswers(request: HttpRequest):
         _questions = [q.question for q in Question.objects.all()]
         _answers = [a.answer for a in RecruitAnswer.objects.filter(recruitId=_rec_id)]
         _res_list = zip(_questions, _answers)
-        _name = Recruit.objects.get(id=_rec_id).name
-        _sh_number = Sith.objects.get(id=request.POST.get('sith_id')).shadowHandsNumber
+        _name = Recruit.objects.get(id=_rec_id).name        
+        _sh_number = Sith.objects.get(id=request.POST.get('sith_id')).recruit_set.all().count()        
         context = {
             'title': 'Answers',
             'results': _res_list,
@@ -81,24 +83,15 @@ def showAnswers(request: HttpRequest):
         return render(request, 'recruit/endTest.html', context=context)  
 
 def shadowHand(request: HttpRequest):
-    if request.method == 'POST':
-        _sith_list = Sith.objects.all()
-        _sh_number = _sith_list.get(id=request.POST.get('sith_id')).shadowHandsNumber
+    if request.method == 'POST':        
+        _sh_number = Sith.objects.get(id=request.POST.get('sith_id')).recruit_set.all().count()
         if _sh_number < 3:
             _rec_id = request.POST.get('recruit_id')            
             _sith_id = request.POST.get('sith_id')               
-            _rec = Recruit.objects.get(id=_rec_id)
-            print(_rec.id)
-            _rec_name = _rec.name
-            _sith = _sith_list.get(id=request.POST.get('sith_id'))
-            # _rec.mainSith.set(request.POST.get('sith_id') )
+            _rec = Recruit.objects.get(id=_rec_id)            
+            _rec_name = _rec.name                       
             _rec.mainSith_id = int(request.POST.get('sith_id'))
             _rec.save(update_fields=['mainSith_id'])
-            _sith.shadowHandsNumber += 1
-            _sith.save()
-            # _rec.shadowHand = True
-            # _rec.main_sith.set(_sith_id)
-            # _rec.save()
             # send_mail('Django mail', 'This e-mail was sent with Django.', 'your@gmail.com', [f'{_rec.email}'], fail_silently=False)
             return render(request, 'recruit/shadowHand.html', context={'title': 'ShadowHand', 'name': _rec_name, 'id': _rec_id}) 
         else:
